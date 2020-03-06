@@ -4,6 +4,16 @@
 #include <sstream>
 using namespace std; 
 
+BST:: ~BST(){
+    clear(root);
+}
+
+void BST:: clear(Node* n){
+    if(!n) return;
+    clear(n->left);
+    clear(n->right);
+    delete n;
+}
 void BST:: insert(int value){
     Node* n = new Node(value, NULL, NULL, NULL); 
     if(!root){
@@ -136,7 +146,7 @@ void BST:: remove(int value){
 
 void BST:: preOrder(){
     if(!root){
-        cout<< "Empty Tree"<<endl;
+        cout<< "Empty tree"<<endl;
         return;
     }
     stack<Node*> s;

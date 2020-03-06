@@ -13,8 +13,10 @@ class BST{
         void preOrder();
         void inOrder();
         void postOrder();
-    public: 
+    public:
+        ~BST();
         BST(): root(0) {}
+        void clear(Node*);
         void insert(int);
         void lookup(int);
         void remove(int);
