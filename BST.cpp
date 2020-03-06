@@ -1,12 +1,14 @@
 #include "BST.h"
 #include <iostream>
 #include <stack>
+#include <sstream>
 using namespace std; 
 
 void BST:: insert(int value){
     Node* n = new Node(value, NULL, NULL, NULL); 
     if(!root){
         root = n; 
+        cout<< "Element inserted"<<endl; 
         return; 
     }
     Node* itr = root;
@@ -134,6 +136,10 @@ void BST:: remove(int value){
 }
 
 void BST:: preOrder(){
+    if(!root){
+        cout<< "Empty Tree"<<endl;
+        return;
+    }
     stack<Node*> s;
     s.push(root);
     while(!s.empty()){
@@ -143,55 +149,89 @@ void BST:: preOrder(){
         if(tmp->right) s.push(tmp->right);
         if(tmp->left) s.push(tmp->left);
     }
+    cout<<endl;
 }
 
 void BST::inOrder(){
     if(!root){
-        cout<< "";
         return;
     }
     stack<Node*> s; 
-    s.push(root);
-    int i =0;
-    while(i!=2){
-        Node* tmp = s.top();
-        while(tmp->left){
-            s.push(tmp->left);
+    Node* tmp = root;
+    while(tmp || !s.empty()){
+        while(tmp){
+            s.push(tmp);
             tmp = tmp->left;
         }
+        tmp = s.top();
         cout<< s.top()->value<< " ";
         s.pop();
-        if(tmp->right) s.push(tmp->right);
-        i++;
+        tmp = tmp->right;
     }
+    cout<<endl;
 }
 
+void BST::postOrder(){
+    if(!root){
+        return;
+    }
+    stack<Node*> s1, s2;
+    s1.push(root);
+    while(!s1.empty()){
+        Node* tmp = s1.top();
+        s1.pop();
+        s2.push(tmp);
+        if(tmp->left) s1.push(tmp->left);
+        if(tmp->right) s1.push(tmp->right);
+    }
+    while(!s2.empty()){
+        cout<< s2.top()->value<< " ";
+        s2.pop();
+    }
+    cout<<endl;
+}
 
 void BST:: print(){
     preOrder();
-    cout<< endl;
     inOrder();
+    postOrder();
 }
 
 void BST:: printBsf(){
 
 }
 
-int main(){
-    
-    BST b;
-    b.insert(20);
-    b.insert(10);
-    b.insert(30);
-    b.insert(5);
-    b.insert(15);
-    b.insert(25);
-    b.insert(35);
-    b.insert(4);
-    b.insert(11);
-    b.insert(22);
-    b.insert(27);
-    b.insert(40);
-    b.print();
-
+int main(int argc, char** argv){
+    BST b; 
+    if(argc !=2){
+        cerr << "Not a valid Inupt"<<endl;
+    }
+    string input = argv[1];
+    istringstream ss(input);
+    string token;
+    while(std::getline(ss, token, ' ')) {
+       if(token == "insert"){
+           getline(ss,token,' ');
+           int i = stoi(token);
+           b.insert(i);
+           continue; 
+       } 
+       if(token == "access"){
+           getline(ss,token,' ');
+           int i = stoi(token);
+           b.lookup(i);
+           continue;
+       }
+       if(token == "delete"){
+           getline(ss,token,' ');
+           int i = stoi(token);
+           b.remove(i);
+           continue;
+       }
+       if(token == "print," || token == "print"){
+           b.print();
+           continue;
+       }
+    }
+    return 0;
 }
