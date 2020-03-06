@@ -94,7 +94,6 @@ void BST:: remove(int value){
     }   
     //one children - left child exist
     if(tmp->left && !tmp->right){
-        cout<< "Left child case"<< endl;
         if(tmp == root){
             root = tmp ->left; 
         }else if(tmp == tmp->parent->left){ //if it is left child
