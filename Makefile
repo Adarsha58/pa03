@@ -7,4 +7,4 @@ avl: BST.o
 	g++ BST.o -o avl
 
 clean: 
-	rm prog1.out *.o
+	rm bst avl *.o
