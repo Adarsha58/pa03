@@ -14,19 +14,21 @@ void BST:: clear(Node* n){
     clear(n->right);
     delete n;
 }
-void BST:: insert(int value){
+
+Node* BST:: insert(int value){
     Node* n = new Node(value, NULL, NULL, NULL); 
     if(!root){
         root = n; 
         cout<< "Element inserted"<<endl; 
-        return; 
+        return root; 
     }
     Node* itr = root;
     //finding the right position for the iterator
     while(itr-> left || itr->right){
         if(itr->value == value){
             cout<< "Element already present"<<endl;
-            return; 
+            delete n;
+            return NULL; 
         }
         if(itr->value < value && itr->right) {
             itr = itr-> right;
@@ -44,6 +46,7 @@ void BST:: insert(int value){
         n->parent = itr; 
     }
     cout<< "Element inserted"<<endl; 
+    return n;
 }
 
 Node* BST:: access(int value){
