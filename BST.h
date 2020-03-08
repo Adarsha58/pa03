@@ -7,7 +7,7 @@ struct Node{
 };
 
 class BST{    
-    private:
+    protected:
         Node* root; 
         Node* access(int);
         void preOrder();
@@ -17,7 +17,7 @@ class BST{
         ~BST();
         BST(): root(0) {}
         void clear(Node*);
-        void insert(int);
+        Node* insert(int);
         void lookup(int);
         void remove(int);
         void print();
