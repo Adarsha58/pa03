@@ -1,7 +1,7 @@
-all: bst avl
+all: avl
 
-bst: BST.o	
-	g++ BST.o -o bst
+#bst: AVL.o	
+#	g++ AVL.o -o bst
 
 avl: AVL.o BST.o
 	g++ AVL.o BST.o -o avl

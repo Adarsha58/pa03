@@ -176,11 +176,13 @@ void BST::inOrder(){
             tmp = tmp->left;
         }
         tmp = s.top();
-        cout<< "Node value: "<< s.top()->value<< endl;
-        if(tmp->parent) cout<< "Node parent: "<< s.top()->parent->value<< endl;
+        cout<< s.top()->value<< " ";
+       
+       /*if(tmp->parent) cout<< "Node parent: "<< s.top()->parent->value<< endl;
         if(tmp->left) cout<< "Node left: "<< s.top()->left->value<< endl;
         if(tmp->right) cout<< "Node right: "<< s.top()->right->value<< endl;
         cout<< endl;
+        */
         s.pop();
         tmp = tmp->right;
     }
@@ -208,9 +210,9 @@ void BST::postOrder(){
 }
 
 void BST:: print(){
-  //  preOrder();
+    preOrder();
     inOrder();
-   // postOrder();
+    postOrder();
 }
 
 void BST:: printBsf(){

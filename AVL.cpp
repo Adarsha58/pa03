@@ -51,9 +51,17 @@ void AVL::rrRotation(Node* n){
 }
 
 void AVL::lrRotation(Node* n){
-    cout<< "lrRotation"<<endl;
-    llRotation(n->left);
+    cout<< "lrRotation"<<endl; 
+    rrRotation(n->left);
+    llRotation(n);
 }
+
+void AVL::rlRotation(Node* n){
+    cout<< "rlRotation"<<endl;
+    llRotation(n->right);
+    rrRotation(n);
+}
+
 void AVL::insert(int value){
     Node* itr = BST::insert(value); //this is the node which is just inserted to BST
     if(!itr) {
@@ -64,14 +72,15 @@ void AVL::insert(int value){
         int heightDifference = heightOfTree(itr->left) - heightOfTree(itr->right);
         if(heightDifference > 1 || heightDifference < -1){
             string tmp = rotation.substr(rotation.length()-2, 2);
+            cout<< "string = "<< tmp<<endl;
             if(tmp.compare("ll") == 0){
                 llRotation(itr);
             }else if(tmp.compare("rr") == 0){
                 rrRotation(itr);
             }else if(tmp.compare("lr") == 0){
-                //rlRotation(itr);
+                rlRotation(itr);
             }else{
-               // lrRotation(itr);
+                lrRotation(itr);
             }
             return;
         }
@@ -83,14 +92,41 @@ void AVL::insert(int value){
     }
 }
 
-int main(){
-    AVL a;
-    a.insert(100);
-    a.insert(50);
-    a.insert(40);
-    a.insert(30);
-    a.insert(20);
-    a.insert(10);
-    a.print();
+void AVL::remove(int){
+    //stub
+}
 
+int main(int argc, char** argv){
+    AVL b; 
+    if(argc !=2){
+        cerr << "Not a valid Inupt"<<endl;
+    }
+    string input = argv[1];
+    istringstream ss(input);
+    string token;
+    while(std::getline(ss, token, ' ')) {
+       if(token == "insert"){
+           getline(ss,token,' ');
+           int i = stoi(token);
+           b.insert(i);
+           continue; 
+       } 
+       if(token == "access"){
+           getline(ss,token,' ');
+           int i = stoi(token);
+           b.lookup(i);
+           continue;
+       }
+       if(token == "delete"){
+           getline(ss,token,' ');
+           int i = stoi(token);
+           b.remove(i);
+           continue;
+       }
+       if(token == "print," || token == "print"){
+           b.print();
+           continue;
+       }
+    }
+    return 0;
 }
