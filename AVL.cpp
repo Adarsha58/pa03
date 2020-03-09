@@ -109,20 +109,37 @@ void AVL::remove(int value){
     }
 }
 
-int main(){
-    AVL a; 
-    a.insert(5);
-    a.insert(3);
-    a.insert(8);
-    a.insert(2);
-    a.insert(4);
-    a.insert(7);
-    a.insert(11);
-    a.insert(1);
-    a.insert(6);
-    a.insert(10);
-    a.insert(12);
-    a.insert(9);
-    a.remove(4);
-    a.print();
+int main(int argc, char** argv){
+    AVL b; 
+    if(argc !=2){
+        cerr << "Not a valid Inupt"<<endl;
+    }
+    string input = argv[1];
+    istringstream ss(input);
+    string token;
+    while(std::getline(ss, token, ' ')) {
+       if(token == "insert"){
+           getline(ss,token,' ');
+           int i = stoi(token);
+           b.insert(i);
+           continue; 
+       } 
+       if(token == "access"){
+           getline(ss,token,' ');
+           int i = stoi(token);
+           b.lookup(i);
+           continue;
+       }
+       if(token == "delete"){
+           getline(ss,token,' ');
+           int i = stoi(token);
+           b.remove(i);
+           continue;
+       }
+       if(token == "print," || token == "print"){
+           b.print();
+           continue;
+       }
+    }
+    return 0;
 }
