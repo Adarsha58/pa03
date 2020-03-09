@@ -19,7 +19,7 @@ class BST{
         void clear(Node*);
         Node* insert(int);
         void lookup(int);
-        void remove(int);
+        Node* remove(int);
         void print();
         void printBsf();
 };

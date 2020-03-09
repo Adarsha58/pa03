@@ -22,14 +22,16 @@ Node* BST:: insert(int value){
         cout<< "Element inserted"<<endl; 
         return root; 
     }
-    Node* itr = root;
-    //finding the right position for the iterator
-    while(itr-> left || itr->right){
-        if(itr->value == value){
+
+    if(access(value)){
             cout<< "Element already present"<<endl;
             delete n;
             return NULL; 
-        }
+    }
+
+    Node* itr = root;
+    //finding the right position for the iterator
+    while(itr-> left || itr->right){
         if(itr->value < value && itr->right) {
             itr = itr-> right;
         }else if(itr->value > value && itr->left){
@@ -38,6 +40,7 @@ Node* BST:: insert(int value){
             break;
         }
     }
+
     if(value > itr->value){
         itr->right = n; 
         n->parent = itr; 
@@ -72,12 +75,13 @@ void BST:: lookup(int value){
     }
 }
 
-void BST:: remove(int value){
+Node* BST:: remove(int value){
     Node* tmp = access(value); //this is the node to be deleted
     if(!tmp){
         cout<< "Element not found"<<endl; 
-        return; 
+        return NULL; 
     }
+    Node* parent = tmp->parent;
     cout<< "Element deleted"<<endl;
     //no children
     if(!tmp->left && !tmp->right){
@@ -89,12 +93,13 @@ void BST:: remove(int value){
             tmp->parent->right = NULL; //if the node to be deleted is right child
         }
         delete tmp; 
-        return; 
+        return parent; 
     }
     //one children - right child exist 
     if(!tmp->left && tmp->right){
         if(tmp == root){
             root = tmp->right;
+            parent = root; 
         }else if(tmp == tmp->parent->left){ //if it is left child
             tmp->parent->left = tmp->right;
             tmp->right->parent = tmp->parent;
@@ -103,12 +108,13 @@ void BST:: remove(int value){
             tmp->right->parent = tmp->right; 
         }
         delete tmp; 
-        return; 
+        return parent; 
     }   
     //one children - left child exist
     if(tmp->left && !tmp->right){
         if(tmp == root){
-            root = tmp ->left; 
+            root = tmp ->left;
+            parent = root;  
         }else if(tmp == tmp->parent->left){ //if it is left child
             tmp->parent->left = tmp->left;
             tmp->left->parent = tmp->parent;
@@ -117,7 +123,7 @@ void BST:: remove(int value){
             tmp->left->parent = tmp->parent;
         }
         delete tmp; 
-        return;
+        return parent;
     }  
     //two children - replace with the successor
     if(tmp->left && tmp->right){
@@ -143,8 +149,9 @@ void BST:: remove(int value){
             }
         }
         delete succesor;
-        return;
+        return tmp;
     }
+    return parent;
 }
 
 void BST:: preOrder(){
@@ -176,9 +183,8 @@ void BST::inOrder(){
             tmp = tmp->left;
         }
         tmp = s.top();
-        cout<< s.top()->value<< " ";
-       
-       /*if(tmp->parent) cout<< "Node parent: "<< s.top()->parent->value<< endl;
+        cout<< s.top()->value<<" ";
+      /*  if(tmp->parent) cout<< "Node parent: "<< s.top()->parent->value<< endl;
         if(tmp->left) cout<< "Node left: "<< s.top()->left->value<< endl;
         if(tmp->right) cout<< "Node right: "<< s.top()->right->value<< endl;
         cout<< endl;

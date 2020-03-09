@@ -12,17 +12,13 @@ int AVL::heightOfTree(Node* n){
 
 }
 
-void AVL::balance(Node*){
-    cout<< "Balance Needed"<<endl;
-}
 
 void AVL::llRotation(Node* n){
-    cout<< "llrotation"<<endl;
     Node* l = n ->left;
     l->parent= n->parent;
   
     if(n->parent && n == n->parent->left) n->parent->left = l;
-    if(n->parent && n == n->parent->left) n->parent->left = l;
+    if(n->parent && n == n->parent->right) n->parent->right = l;
   
     n->left = l->right;
     if(l->right) l->right->parent = n;
@@ -34,7 +30,6 @@ void AVL::llRotation(Node* n){
 }
 
 void AVL::rrRotation(Node* n){
-    cout<< "rrRotation"<<endl;
     Node* r = n->right; 
     r->parent = n->parent;
 
@@ -51,15 +46,16 @@ void AVL::rrRotation(Node* n){
 }
 
 void AVL::lrRotation(Node* n){
-    cout<< "lrRotation"<<endl; 
     rrRotation(n->left);
     llRotation(n);
+   if(n == root) root = n -> parent;
 }
 
 void AVL::rlRotation(Node* n){
-    cout<< "rlRotation"<<endl;
     llRotation(n->right);
     rrRotation(n);
+    if(n == root) root = n ->parent;
+    
 }
 
 void AVL::insert(int value){
@@ -72,13 +68,12 @@ void AVL::insert(int value){
         int heightDifference = heightOfTree(itr->left) - heightOfTree(itr->right);
         if(heightDifference > 1 || heightDifference < -1){
             string tmp = rotation.substr(rotation.length()-2, 2);
-            cout<< "string = "<< tmp<<endl;
             if(tmp.compare("ll") == 0){
                 llRotation(itr);
             }else if(tmp.compare("rr") == 0){
                 rrRotation(itr);
             }else if(tmp.compare("lr") == 0){
-                rlRotation(itr);
+               rlRotation(itr);
             }else{
                 lrRotation(itr);
             }
@@ -92,41 +87,42 @@ void AVL::insert(int value){
     }
 }
 
-void AVL::remove(int){
-    //stub
+void AVL::remove(int value){
+    Node* itr = BST::remove(value);
+    if(!itr) return;
+    while(itr){
+        int heightDifference = heightOfTree(itr->left) - heightOfTree(itr->right);
+        if(heightDifference < -1){
+            if(heightOfTree(itr->right->left) - heightOfTree(itr->right->right) >0){
+                rlRotation(itr);
+            }else{
+                rrRotation(itr);
+            }
+            }else if (heightDifference > 1){
+                if(heightOfTree(itr->left->left) - heightOfTree(itr->left->right) > 0){
+                    llRotation(itr);
+                }else{
+                    lrRotation(itr);
+                }
+            }   
+            itr = itr->parent;
+    }
 }
 
-int main(int argc, char** argv){
-    AVL b; 
-    if(argc !=2){
-        cerr << "Not a valid Inupt"<<endl;
-    }
-    string input = argv[1];
-    istringstream ss(input);
-    string token;
-    while(std::getline(ss, token, ' ')) {
-       if(token == "insert"){
-           getline(ss,token,' ');
-           int i = stoi(token);
-           b.insert(i);
-           continue; 
-       } 
-       if(token == "access"){
-           getline(ss,token,' ');
-           int i = stoi(token);
-           b.lookup(i);
-           continue;
-       }
-       if(token == "delete"){
-           getline(ss,token,' ');
-           int i = stoi(token);
-           b.remove(i);
-           continue;
-       }
-       if(token == "print," || token == "print"){
-           b.print();
-           continue;
-       }
-    }
-    return 0;
+int main(){
+    AVL a; 
+    a.insert(5);
+    a.insert(3);
+    a.insert(8);
+    a.insert(2);
+    a.insert(4);
+    a.insert(7);
+    a.insert(11);
+    a.insert(1);
+    a.insert(6);
+    a.insert(10);
+    a.insert(12);
+    a.insert(9);
+    a.remove(4);
+    a.print();
 }
