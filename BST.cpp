@@ -222,7 +222,7 @@ void BST:: print(){
 }
 
 //uses stack and vector
-void BST:: printBsf(){
+void BST:: printBfs(){
     if(!root){
         cout<< "Empty Tree"<<endl;
     }

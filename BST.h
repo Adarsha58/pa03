@@ -21,5 +21,5 @@ class BST{
         void lookup(int);
         Node* remove(int);
         void print();
-        void printBsf();
+        void printBfs();
 };
