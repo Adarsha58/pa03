@@ -225,6 +225,7 @@ void BST:: print(){
 void BST:: printBfs(){
     if(!root){
         cout<< "Empty Tree"<<endl;
+        return;
     }
     stack<Node*> s;
     vector<Node*> v;

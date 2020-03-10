@@ -12,7 +12,6 @@ int AVL::heightOfTree(Node* n){
 
 }
 
-
 void AVL::llRotation(Node* n){
     Node* l = n ->left;
     l->parent= n->parent;
