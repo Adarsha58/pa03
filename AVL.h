@@ -3,7 +3,6 @@
 class AVL: public BST{
     private:
         int heightOfTree(Node*);
-        void balance(Node*);
         void llRotation(Node*);
         void rrRotation(Node*);
         void lrRotation(Node*);
