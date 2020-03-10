@@ -34,6 +34,10 @@ int main(int argc, char** argv){
            b.print();
            continue;
        }
+       if(token == "printbfs," || token == "printbfs"){
+           b.printBsf();
+           continue;
+       }
     }
     return 0;
 }

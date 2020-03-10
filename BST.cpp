@@ -1,6 +1,7 @@
 #include "BST.h"
 #include <iostream>
 #include <stack>
+#include <vector>
 using namespace std; 
 
 BST:: ~BST(){
@@ -183,7 +184,7 @@ void BST::inOrder(){
         }
         tmp = s.top();
         cout<< s.top()->value<<" ";
-      /*  if(tmp->parent) cout<< "Node parent: "<< s.top()->parent->value<< endl;
+        /*if(tmp->parent) cout<< "Node parent: "<< s.top()->parent->value<< endl;
         if(tmp->left) cout<< "Node left: "<< s.top()->left->value<< endl;
         if(tmp->right) cout<< "Node right: "<< s.top()->right->value<< endl;
         cout<< endl;
@@ -220,6 +221,31 @@ void BST:: print(){
     postOrder();
 }
 
+//uses stack and vector
 void BST:: printBsf(){
+    if(!root){
+        cout<< "Empty Tree"<<endl;
+    }
+    stack<Node*> s;
+    vector<Node*> v;
+    s.push(root);
+    v.push_back(root);
+    int start = 0;
+    while(!s.empty()){
+        while(!s.empty()){
+            Node* tmp = s.top();
+            if(tmp->left) v.push_back(tmp->left);
+            if(tmp->right) v.push_back(tmp->right);
+            s.pop();
+            start++;
+        }
+        for(int i = v.size() -1; i >= start; i--){
+            s.push(v[i]);
+        }
+    }
 
+    for(int i = 0; i < v.size(); i++){
+        cout<< v[i]->value << " ";
+    }
+    cout<< endl;
 }
