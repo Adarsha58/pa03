@@ -98,14 +98,14 @@ void AVL::remove(int value){
             }else{
                 rrRotation(itr);
             }
-            }else if (heightDifference > 1){
-                if(heightOfTree(itr->left->left) - heightOfTree(itr->left->right) > 0){
-                    llRotation(itr);
-                }else{
-                    lrRotation(itr);
-                }
-            }   
-            itr = itr->parent;
+        }else if (heightDifference > 1){
+            if(heightOfTree(itr->left->left) - heightOfTree(itr->left->right) > 0){
+                llRotation(itr);
+            }else{
+                lrRotation(itr);
+            }
+        }   
+        itr = itr->parent;
     }
 }
 
