@@ -136,9 +136,18 @@ int main(int argc, char** argv){
            b.remove(i);
            continue;
        }
-       if(token == "print," || token == "print"){
+        if(token == "print,"){
            b.print();
            continue;
+       }
+
+       if(token == "print"){
+           getline(ss, token, ' ');
+           if(token == "bfs" || token == "bfs,"){
+               b.printBfs();
+           }else{
+               b.print();
+           }
        }
     }
     return 0;
