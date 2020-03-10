@@ -34,7 +34,7 @@ int main(int argc, char** argv){
            b.print();
            continue;
        }
-       if(token == "printbfs," || token == "printbfs"){
+       if(token == "print bfs," || token == "print bfs"){
            b.printBsf();
            continue;
        }
