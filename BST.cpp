@@ -172,27 +172,32 @@ void BST:: preOrder(){
 }
 
 void BST::inOrder(){
-    if(!root){
-        return;
+    Node* max = root; 
+    while(max->right){
+        max = max->right;
     }
-    stack<Node*> s; 
-    Node* tmp = root;
-    while(tmp || !s.empty()){
-        while(tmp){
-            s.push(tmp);
-            tmp = tmp->left;
+
+    Node* min = root;
+    while(min->left){
+        min = min->left;
+    }
+
+    while(min != max){
+        cout<< min->value <<" ";
+        if(min->right){
+            min = min->right;
+            while(min->left){
+                min = min ->left;
+            }
+        }else{
+            while(min->parent && min->parent->value < min->value){
+                min = min->parent;
+            }
+            min = min->parent;
         }
-        tmp = s.top();
-        cout<< s.top()->value<<" ";
-        /*if(tmp->parent) cout<< "Node parent: "<< s.top()->parent->value<< endl;
-        if(tmp->left) cout<< "Node left: "<< s.top()->left->value<< endl;
-        if(tmp->right) cout<< "Node right: "<< s.top()->right->value<< endl;
-        cout<< endl;
-        */
-        s.pop();
-        tmp = tmp->right;
     }
-    cout<<endl;
+    cout<< max->value<< " "<<endl;
+
 }
 
 void BST::postOrder(){
