@@ -172,6 +172,9 @@ void BST:: preOrder(){
 }
 
 void BST::inOrder(){
+    if(!root){
+        return;
+    }
     Node* max = root; 
     while(max->right){
         max = max->right;
